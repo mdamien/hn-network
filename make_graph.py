@@ -11,11 +11,20 @@ for file in glob.glob('data/stories/*'):
         if hnuser:
             data.append([title, hnuser])
 
+data2 = []
+
 for title, hnuser in data:
-    ok = False
+    count = 0
     for title2, hnuser2 in data:
         if title != title2 and hnuser == hnuser2:
-            ok = True
-            break
-    if ok:
+            count += 1
+    if count > 5:
+        data2.append([title, hnuser])
+
+for title, hnuser in data2:
+    count = 0
+    for title2, hnuser2 in data2:
+        if title == title2 and hnuser != hnuser2:
+            count += 1
+    if count > 5:
         print("story|"+title, "user|"+hnuser, sep=';')
