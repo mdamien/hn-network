@@ -1,15 +1,17 @@
 import bs4
 import glob
+import sys
 
 data = []
 
 for file in glob.glob('data/stories/*'):
     soup = bs4.BeautifulSoup(open(file).read(), 'lxml')
     title = soup.title.text.strip().replace(' | Hacker News', '').replace(';', '').replace('\n', ' ')
-    for hnuser in soup.select('.hnuser'):
-        hnuser = hnuser.text.strip()
-        if hnuser:
-            data.append([title, hnuser])
+    if soup.select('.subtext'):
+        for hnuser in soup.select('.hnuser'):
+            hnuser = hnuser.text.strip()
+            if hnuser:
+                data.append([title, hnuser])
 
 data2 = []
 
@@ -18,7 +20,7 @@ for title, hnuser in data:
     for title2, hnuser2 in data:
         if title != title2 and hnuser == hnuser2:
             count += 1
-    if count > 5:
+    if count > 2:
         data2.append([title, hnuser])
 
 for title, hnuser in data2:
@@ -26,5 +28,5 @@ for title, hnuser in data2:
     for title2, hnuser2 in data2:
         if title == title2 and hnuser != hnuser2:
             count += 1
-    if count > 5:
+    if count > 2:
         print("story|"+title, "user|"+hnuser, sep=';')
