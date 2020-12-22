@@ -20,7 +20,7 @@ for title, hnuser in data:
     for title2, hnuser2 in data:
         if title != title2 and hnuser == hnuser2:
             count += 1
-    if count > 2:
+    if count > 1:
         data2.append([title, hnuser])
 
 for title, hnuser in data2:
@@ -28,5 +28,5 @@ for title, hnuser in data2:
     for title2, hnuser2 in data2:
         if title == title2 and hnuser != hnuser2:
             count += 1
-    if count > 2:
+    if count > 1:
         print("story|"+title, "user|"+hnuser, sep=';')
